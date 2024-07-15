@@ -1,12 +1,27 @@
 {
   "name": "babel-preset-transform-import-meta",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "type": "module",
+  "module": "lib/index.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "prepublish": "pnpm run lint && pnpm run test && pnpm run build",
+    "lint": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "babel",
+    "vite",
+    "import.meta",
+    "import.meta.env",
+    "import.meta.glob",
+    "import.meta.globEager",
+    "import.meta.hot"
+  ],
+  "author": "yzgl-fav<1426067124@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel-plugin-transform-import-meta-env": "workspace:*"
+  }
 }
