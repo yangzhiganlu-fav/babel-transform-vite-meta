@@ -1,0 +1,25 @@
+{
+  "name": "babel-plugin-transform-import-meta-env",
+  "version": "0.0.1",
+  "description": "babel plugin to resolve jest error about import.meta.env",
+  "main": "lib/index.js",
+  "type": "module",
+  "typings": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --no-cache",
+    "build": "rollup -c",
+    "prepublish": "pnpm run lint && pnpm run test && pnpm run build",
+    "lint": "eslint . --fix"
+  },
+  "keywords": [
+    "babel",
+    "vite",
+    "import.meta.env"
+  ],
+  "author": "yzgl-fav<1426067124@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
