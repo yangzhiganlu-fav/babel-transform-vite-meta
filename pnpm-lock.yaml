@@ -73,6 +73,12 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
 
+  packages/babel-plugin-transform-import-meta-glob: {}
+
+  packages/babel-plugin-transform-import-meta-hot: {}
+
+  packages/babel-preset-transform-import-meta: {}
+
 packages:
 
   '@ampproject/remapping@2.3.0':

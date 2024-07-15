@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "test": "pnpm -r --filter ./packages run test",
-    "lint": "pnpm -r --filter ./packages run lint",
-    "build": "pnpm -r --filter ./packages run build",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "build": "pnpm -r run build",
     "changeset": "changeset",
     "vp": "changeset version",
     "release": "pnpm build && pnpm release:only",
