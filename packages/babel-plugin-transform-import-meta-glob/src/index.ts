@@ -64,7 +64,7 @@ const plugin = ({ types: t }: typeof babelCore): PluginObj => {
             }, {} as PluginOpts);
         }
         return opts;
-    }
+    };
 
     return {
         visitor: {

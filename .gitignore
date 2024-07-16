@@ -3,4 +3,3 @@ lib/
 coverage/
 __snapshots__/
 pnpm-lock.yaml
-vite-demo-test/

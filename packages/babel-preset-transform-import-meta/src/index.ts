@@ -1,8 +1,8 @@
 import babelCore, { ConfigItem } from '@babel/core';
-import envPlugin from 'babel-plugin-transform-import-meta-env'
-import type { PluginOpts as EnvPluginOpts } from 'babel-plugin-transform-import-meta-env'
-import globPlugin from 'babel-plugin-transform-import-meta-glob'
-import type { PluginOpts as GlobPluginOpts } from 'babel-plugin-transform-import-meta-glob'
+import envPlugin from 'babel-plugin-transform-import-meta-env';
+import type { PluginOpts as EnvPluginOpts } from 'babel-plugin-transform-import-meta-env';
+import globPlugin from 'babel-plugin-transform-import-meta-glob';
+import type { PluginOpts as GlobPluginOpts } from 'babel-plugin-transform-import-meta-glob';
 
 export interface PresetOptions {
     env?: boolean | EnvPluginOpts
@@ -12,7 +12,7 @@ export interface PresetOptions {
 const defaultOpts: PresetOptions = {
     env: true,
     glob: true,
-}
+};
 
 const preset = (_: typeof babelCore, opts: PresetOptions = defaultOpts): { plugins: ConfigItem[] } => {
     const plugins: ConfigItem[] = [];
@@ -32,6 +32,6 @@ const preset = (_: typeof babelCore, opts: PresetOptions = defaultOpts): { plugi
     return {
         plugins,
     };
-}
+};
 
 export default preset;

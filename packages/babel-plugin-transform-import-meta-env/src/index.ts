@@ -11,7 +11,7 @@ export interface PluginOpts {
 
 const defaultPluginOpts: PluginOpts = {
     mockData: {}
-}
+};
 
 const plugin = ({ types: t }: typeof babelCore, opts: PluginOpts = defaultPluginOpts): PluginObj => {
     let mockData: Record<string, string>;
@@ -58,7 +58,7 @@ const plugin = ({ types: t }: typeof babelCore, opts: PluginOpts = defaultPlugin
                 }
             }
         }
-    }
-}
+    };
+};
 
 export default plugin;
