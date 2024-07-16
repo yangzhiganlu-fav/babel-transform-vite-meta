@@ -22,11 +22,6 @@ const plugin = ({ types: t }: typeof babelCore, opts: PluginOpts = defaultPlugin
     } else {
         mockData = opts.mockData || {};
     }
-    Object.keys(mockData).forEach(key => {
-        if (process.env[key] === undefined) {
-            process.env[key] = mockData[key];
-        }
-    });
     return {
         name: 'babel-plugin-transform-import-meta-env',
         visitor: {
@@ -39,19 +34,18 @@ const plugin = ({ types: t }: typeof babelCore, opts: PluginOpts = defaultPlugin
                     t.isIdentifier(node.property) &&
                     node.property.name === 'env'
                 ) {
-                    const parent = path.parent;
-                    if (t.isMemberExpression(parent)) {
-                        path.replaceWith(
-                            t.memberExpression(
-                                t.memberExpression(
-                                    t.identifier('process'),
-                                    t.identifier('env')
-                                ),
-                                parent.property
-                            )
-                        );
+                    const parent = path.parentPath;
+                    if (t.isMemberExpression(parent.node)) {
+                        const { property } = parent.node;
+                        if (t.isIdentifier(property)) {
+                            parent.replaceWith(t.stringLiteral(mockData[property.name] || ''));
+                        }
                     } else {
-                        path.replaceWith(t.memberExpression(t.identifier('process'), t.identifier('env')));
+                        path.replaceWith(t.objectExpression(
+                            Object.entries(mockData).map(([key, value]) => {
+                                return t.objectProperty(t.stringLiteral(key), t.stringLiteral(value));
+                            })
+                        ));
                     }
                 }
             }

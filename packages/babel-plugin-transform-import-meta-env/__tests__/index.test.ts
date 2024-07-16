@@ -3,16 +3,6 @@ import {resolve} from 'path';
 import BabelPluginTransformEnv from '../src/index';
 
 describe('babel-plugin-transform-env', () => {
-    let originalEnv: NodeJS.ProcessEnv;
-
-    beforeEach(() => {
-        originalEnv = { ...process.env };
-    });
-
-    afterEach(() => {
-        process.env = originalEnv;
-    });
-
     it('should replace import.meta.env with process.env and use mock data', () => {
         const transformed = transformFileSync(resolve(__dirname, 'fixtures/index.ts'), {
             plugins: [
@@ -20,15 +10,13 @@ describe('babel-plugin-transform-env', () => {
                     BabelPluginTransformEnv,
                     {
                         mockData: {
-                            API_URL: 'https://api.example.com',
-                            API_KEY: '123',
+                            VITE_API_URL: 'https://api.example.com',
+                            VITE_API_KEY: '123',
                         },
                     }
                 ],
             ],
         })?.code;
-        expect(process.env.API_URL).toContain('https://api.example.com');
-        expect(process.env.API_KEY).toContain('123');
         expect(transformed).toMatchSnapshot();
     });
 
@@ -42,8 +30,6 @@ describe('babel-plugin-transform-env', () => {
                 ]
             ],
         })?.code;
-        expect(process.env.API_URL).toContain('https://api.example.com');
-        expect(process.env.API_KEY).toContain('123');
         expect(transformed).toMatchSnapshot();
     });
 
@@ -68,8 +54,6 @@ describe('babel-plugin-transform-env', () => {
                 BabelPluginTransformEnv,
             ],
         })?.code;
-        expect(process.env.API_URL).toBeUndefined();
-        expect(process.env.API_KEY).toBeUndefined();
         expect(transformed).toMatchSnapshot();
     });
 
@@ -79,16 +63,14 @@ describe('babel-plugin-transform-env', () => {
                 [
                     BabelPluginTransformEnv, {
                         mockData: {
-                            API_URL: 'https://api.example.com/mockData',
-                            API_KEY: 'mockData123',
+                            VITE_API_URL: 'https://api.example.com/mockData',
+                            VITE_API_KEY: 'mockData123',
                         },
                         envFile: resolve(__dirname, 'fixtures/.env'),
                     }
                 ]
             ],
         })?.code;
-        expect(process.env.API_URL).toContain('https://api.example.com');
-        expect(process.env.API_KEY).toContain('123');
         expect(transformed).toMatchSnapshot();
     });
 });
