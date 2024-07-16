@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-transform-import-meta",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "babel preset to transform import.meta",
   "exports": {
     ".": {
