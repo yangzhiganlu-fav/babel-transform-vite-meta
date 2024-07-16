@@ -23,7 +23,7 @@
   "scripts": {
     "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --no-cache",
     "build": "rollup -c",
-    "prepublish": "pnpm run lint && pnpm run test && pnpm run build",
+    "prepublish": "pnpm lint && pnpm test && pnpm build",
     "lint": "eslint . --fix"
   },
   "keywords": [
