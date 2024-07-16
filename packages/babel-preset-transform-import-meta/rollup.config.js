@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 import { babel } from '@rollup/plugin-babel';
+import del from 'rollup-plugin-delete';
 
 export default {
     input: 'src/index.ts',
@@ -13,7 +14,7 @@ export default {
             file: 'lib/index.js',
             format: 'cjs',
             sourcemap: true,
-            plugins: [terser()]
+            plugins: [terser()],
         },
         {
             file: 'lib/index.esm.js',
@@ -23,6 +24,7 @@ export default {
         }
     ],
     plugins: [
+        del({ targets: 'lib/*' }),
         resolve(),
         commonjs(),
         json(),

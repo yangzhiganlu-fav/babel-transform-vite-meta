@@ -183,7 +183,6 @@ const config: Config = {
             'babel-jest',
             {
                 presets: [
-                    '@babel/preset-env',
                     '@babel/preset-typescript'
                 ]
             }
@@ -207,6 +206,7 @@ const config: Config = {
 
     // Whether to use watchman for file crawling
     // watchman: true,
+    extensionsToTreatAsEsm: ['.ts'],
 };
 
 export default config;

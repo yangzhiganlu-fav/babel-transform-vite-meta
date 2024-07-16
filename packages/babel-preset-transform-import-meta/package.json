@@ -1,11 +1,12 @@
 {
   "name": "babel-preset-transform-import-meta",
   "version": "0.0.1",
-  "description": "",
+  "description": "babel preset to transform import.meta",
   "main": "lib/index.js",
   "type": "module",
   "module": "lib/index.esm.js",
   "scripts": {
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --no-cache",
     "build": "rollup -c",
     "prepublish": "pnpm run lint && pnpm run test && pnpm run build",
     "lint": "eslint . --fix"

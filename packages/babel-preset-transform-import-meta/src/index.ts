@@ -1,5 +1,6 @@
 import babelCore, { ConfigItem } from '@babel/core';
-import envPlugin, { PluginOpts as EnvPluginOpts } from 'babel-plugin-transform-import-meta-env'
+import envPlugin from 'babel-plugin-transform-import-meta-env'
+import type { PluginOpts as EnvPluginOpts } from 'babel-plugin-transform-import-meta-env'
 
 export interface PresetOptions {
     env?: boolean | EnvPluginOpts
