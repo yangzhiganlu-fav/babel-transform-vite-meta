@@ -8,7 +8,10 @@ import del from 'rollup-plugin-delete';
 
 export default {
     input: 'src/index.ts',
-    external: ['babel-plugin-transform-import-meta-env'],
+    external: [
+        'babel-plugin-transform-import-meta-env',
+        'babel-plugin-transform-import-meta-glob',
+    ],
     output: [
         {
             file: 'lib/index.js',
