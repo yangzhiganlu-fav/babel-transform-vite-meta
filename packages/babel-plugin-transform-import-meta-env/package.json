@@ -12,6 +12,14 @@
   "typings": "lib/index.d.ts",
   "type": "module",
   "files": ["lib"],
+  "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/tree/master/packages/babel-plugin-transform-import-meta-env#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangzhiganlu-fav/babel-transform-vite-meta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/issues"
+  },
   "scripts": {
     "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --no-cache",
     "build": "rollup -c",
