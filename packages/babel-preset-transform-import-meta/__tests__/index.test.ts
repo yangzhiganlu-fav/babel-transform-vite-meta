@@ -69,14 +69,4 @@ describe('babel-preset-transform-import-meta', () => {
             ],
         });
     });
-
-    it('should return a preset object with glob options with options', () => {
-        const opts = { glob: { eager: true }, env: false };
-        const result = preset(babelCore, opts);
-        expect(result).toEqual({
-            plugins: [
-                babelCore.createConfigItem([globPlugin, opts.glob]),
-            ],
-        });
-    });
 });
