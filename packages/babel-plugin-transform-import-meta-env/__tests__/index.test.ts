@@ -73,13 +73,37 @@ describe('babel-plugin-transform-env', () => {
         })?.code;
         expect(transformed).toMatchSnapshot();
     });
-    it("should replace import.meta.env with process.env and use multiple env files", () => {
+    it("should replace import.meta.env with process.env and use multiple env files with override", () => {
         const transformed = transformFileSync(resolve(__dirname, "fixtures/index.ts"), {
             plugins: [
                 [
                     BabelPluginTransformEnv,
                     {
-                        envFile: [resolve(__dirname, "fixtures/.env"), resolve(__dirname, "fixtures/.env.dev")],
+                        envFile: {
+                            files: [
+                                resolve(__dirname, "fixtures/.env"),
+                                resolve(__dirname, "fixtures/.env.dev")
+                            ],
+                            override: true
+                        }
+                    },
+                ],
+            ],
+        })?.code;
+        expect(transformed).toMatchSnapshot();
+    });
+    it("should replace import.meta.env with process.env and use multiple env files without override", () => {
+        const transformed = transformFileSync(resolve(__dirname, "fixtures/index.ts"), {
+            plugins: [
+                [
+                    BabelPluginTransformEnv,
+                    {
+                        envFile: {
+                            files: [
+                                resolve(__dirname, "fixtures/.env"),
+                                resolve(__dirname, "fixtures/.env.dev")
+                            ],
+                        }
                     },
                 ],
             ],

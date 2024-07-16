@@ -1,9 +1,12 @@
 import babelCore, { PluginObj } from '@babel/core';
-import { config } from 'dotenv';
+import { config, DotenvConfigOutput } from 'dotenv';
 
 export interface PluginOpts {
     mockData?: Record<string, string>;
-    envFile?: string | string[];
+    envFile?: string | {
+        files: string[];
+        override: boolean;
+    };
 }
 
 const defaultPluginOpts: PluginOpts = {
@@ -13,7 +16,12 @@ const defaultPluginOpts: PluginOpts = {
 const plugin = ({ types: t }: typeof babelCore, opts: PluginOpts = defaultPluginOpts): PluginObj => {
     let mockData: Record<string, string>;
     if (opts.envFile) {
-        const loadData = config({ path: opts.envFile, override: true });
+        let loadData: DotenvConfigOutput;
+        if (typeof opts.envFile === 'string') {
+            loadData = config({ path: opts.envFile });
+        } else {
+            loadData = config({ path: opts.envFile.files, override: !!opts.envFile.override });
+        }
         if (loadData.error) {
             throw loadData.error;
         } else {
