@@ -2,14 +2,14 @@ import babelCore, { NodePath, PluginObj } from '@babel/core';
 import { glob } from 'fast-glob';
 import { dirname } from 'path';
 
-export interface ImportMetaGlobOptions {
+export interface PluginOpts {
     eager?: boolean;
     [key: string]: boolean | object | string | undefined;
 }
 
-const transformImportMetaGlob = ({ types: t }: typeof babelCore): PluginObj => {
+const plugin = ({ types: t }: typeof babelCore): PluginObj => {
     const asts = {
-        glob: (pathList: string[], options?: ImportMetaGlobOptions) => {
+        glob: (pathList: string[], options?: PluginOpts) => {
             if (options?.eager) {
                 return t.objectExpression(
                     pathList.map((path) =>
@@ -50,7 +50,7 @@ const transformImportMetaGlob = ({ types: t }: typeof babelCore): PluginObj => {
     };
 
     const getOptsFromAst = (optsAsts?: babelCore.types.CallExpression['arguments'][number]) => {
-        let opts: ImportMetaGlobOptions | undefined;
+        let opts: PluginOpts | undefined;
         if (optsAsts) {
             opts = (optsAsts as babelCore.types.ObjectExpression).properties.reduce((acc, curr) => {
                 if (
@@ -61,7 +61,7 @@ const transformImportMetaGlob = ({ types: t }: typeof babelCore): PluginObj => {
                     acc[curr.key.name] = curr.value.value;
                 }
                 return acc;
-            }, {} as ImportMetaGlobOptions);
+            }, {} as PluginOpts);
         }
         return opts;
     }
@@ -94,4 +94,4 @@ const transformImportMetaGlob = ({ types: t }: typeof babelCore): PluginObj => {
     };
 };
 
-export default transformImportMetaGlob;
+export default plugin;
