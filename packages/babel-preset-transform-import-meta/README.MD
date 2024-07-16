@@ -9,9 +9,9 @@
 ```js
 module.exports = {
     "presets": [
-        // useage1
+        // usage1
         "babel-preset-transform-import-meta",
-        // useage2, use plugin config
+        // usage2, use plugin config
         [
             "babel-preset-transform-import-meta",
             {
@@ -20,7 +20,7 @@ module.exports = {
                 }
             }
         ]
-        // useage3, close plugin
+        // usage3, close plugin
         [
             "babel-preset-transform-import-meta",
             {

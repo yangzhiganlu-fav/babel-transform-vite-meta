@@ -9,9 +9,9 @@
 ```js
 module.exports = {
     "plugins": [
-        // useage1
+        // usage1
         "babel-plugin-transform-import-meta-env",
-        // useage2
+        // usage2
         [
             "babel-plugin-transform-import-meta-env",
             {
@@ -20,11 +20,36 @@ module.exports = {
                 }
             }
         ],
-        // useage3
+        // usage3
         [
             "babel-plugin-transform-import-meta-env",
             {
                 envFile: 'absolute path to .env file'
+            }
+        ],
+        // usage4
+        [
+            "babel-plugin-transform-import-meta-env",
+            {
+                envFile: {
+                    files: [
+                        'absolute path to .env file1',
+                        'absolute path to .env file2',
+                    ]
+                }
+            }
+        ],
+        // usage5 override 设置为 true，后续的 .env 文件会覆盖前面的 .env 文件的同名变量
+        [
+            "babel-plugin-transform-import-meta-env",
+            {
+                envFile: {
+                    files: [
+                        'absolute path to .env file1',
+                        'absolute path to .env file2',
+                    ],
+                    override: true
+                }
             }
         ]
     ]
