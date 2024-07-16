@@ -1,5 +1,6 @@
-node_modules
-lib
-coverage
-__snapshots__
-vite-demo-test
+node_modules/
+lib/
+coverage/
+__snapshots__/
+pnpm-lock.yaml
+vite-demo-test/
