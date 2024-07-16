@@ -2,7 +2,7 @@
 
 ## 作用
 
-解决运行 `jest` 单元测试时，无法获取 `vite` 挂载的 `import.meta.env` 问题，因为 `vite` 并没有运行
+解决运行 `jest` 单元测试时，无法获取 `vite` 挂载的 `import.meta.env`、`import.meta.glob`、`import.meta.globEager` 问题，因为 `vite` 并没有运行
 
 ## 使用
 
@@ -17,6 +17,9 @@ module.exports = {
             {
                 env: {
                     // config
+                },
+                glob: {
+                    // config
                 }
             }
         ]
@@ -24,7 +27,8 @@ module.exports = {
         [
             "babel-preset-transform-import-meta",
             {
-                env: false
+                env: false,
+                glob: false
             }
         ]
     ]

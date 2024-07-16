@@ -36,6 +36,7 @@
   "author": "yzgl-fav<1426067124@qq.com>",
   "license": "ISC",
   "dependencies": {
-    "babel-plugin-transform-import-meta-env": "workspace:*"
+    "babel-plugin-transform-import-meta-env": "workspace:*",
+    "babel-plugin-transform-import-meta-glob": "workspace:*"
   }
 }
