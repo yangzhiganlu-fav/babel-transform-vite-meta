@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 export interface PluginOpts {
     mockData?: Record<string, string>;
-    envFile?: string;
+    envFile?: string | string[];
 }
 
 const defaultPluginOpts: PluginOpts = {
@@ -13,7 +13,7 @@ const defaultPluginOpts: PluginOpts = {
 const plugin = ({ types: t }: typeof babelCore, opts: PluginOpts = defaultPluginOpts): PluginObj => {
     let mockData: Record<string, string>;
     if (opts.envFile) {
-        const loadData = config({ path: opts.envFile });
+        const loadData = config({ path: opts.envFile, override: true });
         if (loadData.error) {
             throw loadData.error;
         } else {

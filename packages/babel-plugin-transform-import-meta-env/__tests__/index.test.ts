@@ -73,4 +73,17 @@ describe('babel-plugin-transform-env', () => {
         })?.code;
         expect(transformed).toMatchSnapshot();
     });
+    it("should replace import.meta.env with process.env and use multiple env files", () => {
+        const transformed = transformFileSync(resolve(__dirname, "fixtures/index.ts"), {
+            plugins: [
+                [
+                    BabelPluginTransformEnv,
+                    {
+                        envFile: [resolve(__dirname, "fixtures/.env"), resolve(__dirname, "fixtures/.env.dev")],
+                    },
+                ],
+            ],
+        })?.code;
+        expect(transformed).toMatchSnapshot();
+    });
 });
