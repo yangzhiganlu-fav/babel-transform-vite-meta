@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "es2022",
+    "moduleResolution": "Node",
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "global.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}
