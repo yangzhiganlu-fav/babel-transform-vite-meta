@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "description": "babel transform vite meta for jest",
   "type": "module",
+  "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangzhiganlu-fav/babel-transform-vite-meta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/issues"
+  },
   "scripts": {
     "test": "pnpm -r run test",
     "lint": "eslint . --fix",
