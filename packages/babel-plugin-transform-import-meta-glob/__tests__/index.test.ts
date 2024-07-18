@@ -1,7 +1,7 @@
 import BabelPluginTransformGlob from '../src/index';
 import { dirname, resolve } from 'path';
 import { transformFileSync } from '@babel/core';
-import { fileURLToPath }  from 'node:url'
+import { fileURLToPath }  from 'node:url';
 
 describe('BabelPluginTransformGlob', () => {
     const __dirname = dirname(fileURLToPath(import.meta.url));
