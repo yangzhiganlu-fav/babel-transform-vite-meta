@@ -12,20 +12,12 @@ export default {
         'babel-plugin-transform-import-meta-env',
         'babel-plugin-transform-import-meta-glob',
     ],
-    output: [
-        {
-            file: 'lib/index.js',
-            format: 'cjs',
-            sourcemap: true,
-            plugins: [terser()],
-        },
-        {
-            file: 'lib/index.esm.js',
-            format: 'esm',
-            sourcemap: true,
-            plugins: [terser()]
-        }
-    ],
+    output: {
+        file: 'lib/index.js',
+        format: 'esm',
+        sourcemap: true,
+        plugins: [terser()]
+    },
     plugins: [
         del({ targets: 'lib/*' }),
         resolve(),

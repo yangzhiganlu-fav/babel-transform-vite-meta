@@ -2,12 +2,7 @@
   "name": "babel-preset-transform-import-meta",
   "version": "0.0.3",
   "description": "babel preset to transform import.meta",
-  "exports": {
-    ".": {
-      "import": "./lib/index.esm.js",
-      "require": "./lib/index.cjs.js"
-    }
-  },
+  "main": "lib/index.js",
   "type": "module",
   "module": "lib/index.esm.js",
   "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/tree/master/packages/babel-preset-transform-import-meta#readme",

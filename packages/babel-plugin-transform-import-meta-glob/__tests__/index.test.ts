@@ -1,8 +1,11 @@
 import BabelPluginTransformGlob from '../src/index';
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { transformFileSync } from '@babel/core';
+import { fileURLToPath }  from 'node:url'
 
 describe('BabelPluginTransformGlob', () => {
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+
     it('should replace import.meta.globEager(pattern) with globEager(pattern)', () => {
         const transformed = transformFileSync(
             resolve(__dirname, 'fixtures/gloalEager.ts'),

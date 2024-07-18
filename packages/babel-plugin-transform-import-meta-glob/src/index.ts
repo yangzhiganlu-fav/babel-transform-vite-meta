@@ -1,51 +1,82 @@
-import babelCore, { NodePath, PluginObj } from '@babel/core';
-import { glob } from 'fast-glob';
-import { dirname } from 'path';
+import babelCore, { PluginObj } from '@babel/core';
+import fastGlob from 'fast-glob';
+import { dirname, resolve } from 'path';
 
 export interface PluginOpts {
     eager?: boolean;
-    [key: string]: boolean | object | string | undefined;
+    [key: string]: unknown;
 }
 
 const plugin = ({ types: t }: typeof babelCore): PluginObj => {
     const asts = {
-        glob: (pathList: string[], options?: PluginOpts) => {
-            if (options?.eager) {
-                return t.objectExpression(
-                    pathList.map((path) =>
-                        t.objectProperty(t.stringLiteral(path), t.callExpression(t.identifier('require'), [t.stringLiteral(path)]))
-                    )
-                );
-            } else {
-                return t.objectExpression(
-                    pathList.map((path) =>
-                        t.objectProperty(t.stringLiteral(path), t.arrowFunctionExpression([], t.callExpression(t.identifier('import'), [t.stringLiteral(path)]))
+        glob: (paths: string[], cwd: string) => {
+            return t.expressionStatement(
+                t.newExpression(
+                    t.identifier('Promise'),
+                    [
+                        t.arrowFunctionExpression(
+                            [t.identifier('resolve')],
+                            t.blockStatement([
+                                t.expressionStatement(
+                                    t.callExpression(
+                                        t.identifier('resolve'),
+                                        [
+                                            t.objectExpression(
+                                                paths.map((path) =>
+                                                    t.objectProperty(
+                                                        t.stringLiteral(path),
+                                                        t.arrowFunctionExpression(
+                                                            [],
+                                                            t.callExpression(
+                                                                t.import(),
+                                                                [t.stringLiteral(resolve(cwd, path))]
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        ]
+                                    )
+                                )
+                            ])
                         )
-                    ));
-            }
-        },
-        globEager: (pathList: string[]) => {
-            return t.objectExpression(
-                pathList.map((path) =>
-                    t.objectProperty(t.stringLiteral(path), t.callExpression(t.identifier('require'), [t.stringLiteral(path)]))
+                    ]
                 )
             );
+        },
+        globEager: (paths: string[], cwd: string) => {
+            return paths.map((path) => {
+                const moduleName = path.replace(/[^a-zA-Z0-9]/g, '_');
+                return {
+                    path,
+                    name: moduleName,
+                    importAst: t.importDeclaration(
+                        [t.importNamespaceSpecifier(t.identifier(moduleName))],
+                        t.stringLiteral(resolve(cwd, path))
+                    )
+                };
+            });
         }
     };
 
     const getGlobPathObjectFromAst = (patternAsts: babelCore.types.CallExpression['arguments'][number], cwd: string) => {
         const result: string[] = [];
         if (t.isStringLiteral(patternAsts)) {
-            result.push(...glob.sync(patternAsts.value, { cwd, dot: true }));
+            result.push(...fastGlob.globSync(patternAsts.value, { cwd, dot: true }));
         } else if (t.isArrayExpression(patternAsts)) {
             patternAsts.elements.forEach((pattern) => {
                 if (t.isStringLiteral(pattern)) {
-                    result.push(...glob.sync(pattern.value, { cwd, dot: true }));
+                    result.push(...fastGlob.globSync(pattern.value, { cwd, dot: true }));
                 } else {
                     throw new Error('Invalid pattern');
                 }
             });
         }
+        result.forEach((path, index) => {
+            if (!path.startsWith('.')) {
+                result[index] = `./${path}`;
+            }
+        });
         return result;
     };
 
@@ -67,8 +98,9 @@ const plugin = ({ types: t }: typeof babelCore): PluginObj => {
     };
 
     return {
+        name: 'babel-plugin-transform-import-meta-glob',
         visitor: {
-            CallExpression(path: NodePath<babelCore.types.CallExpression>, state) {
+            CallExpression(path, state) {
                 const { node } = path;
                 if (
                     t.isMemberExpression(node.callee) &&
@@ -83,10 +115,20 @@ const plugin = ({ types: t }: typeof babelCore): PluginObj => {
                     const pathList = getGlobPathObjectFromAst(patternAsts, cwd);
                     const optsAsts = node.arguments[1];
                     const opts = getOptsFromAst(optsAsts);
-                    if (node.callee.property.name === 'glob') {
-                        path.replaceWith(opts ? asts.glob(pathList, opts) : asts.glob(pathList));
+                    if (node.callee.property.name === 'globEager' || opts?.eager) {
+                        const program = path.findParent((p) => p.isProgram())!;
+                        const imports = asts.globEager(pathList, cwd);
+                        path.replaceWith(t.objectExpression(
+                            imports.map(({ path, name, importAst }) => {
+                                t.isProgram(program.node) && program.node.body.unshift(importAst);
+                                return t.objectProperty(
+                                    t.stringLiteral(path),
+                                    t.identifier(name)
+                                );
+                            })
+                        ));
                     } else {
-                        path.replaceWith(asts.globEager(pathList));
+                        path.replaceWith(asts.glob(pathList, cwd));
                     }
                 }
             }

@@ -214,6 +214,7 @@ const config: Config = {
 
     // Whether to use watchman for file crawling
     // watchman: true,
+    extensionsToTreatAsEsm: ['.ts', '.tsx'],
 };
 
 export default config;
