@@ -9,9 +9,9 @@
 ```js
 module.exports = {
     "presets": [
-        // usage1
+        // 使用方式1, 直接引入
         "babel-preset-transform-import-meta",
-        // usage2, use plugin config
+        // 使用方式2, 传入配置
         [
             "babel-preset-transform-import-meta",
             {
@@ -23,7 +23,7 @@ module.exports = {
                 }
             }
         ]
-        // usage3, close plugin
+        // 使用方式3, 关闭某些功能
         [
             "babel-preset-transform-import-meta",
             {

@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-transform-import-meta",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "description": "babel preset to transform import.meta",
   "main": "lib/index.js",
   "type": "module",
