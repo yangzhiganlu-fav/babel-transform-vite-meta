@@ -4,7 +4,7 @@
   "description": "babel preset to transform import.meta",
   "main": "lib/index.js",
   "type": "module",
-  "files": ["lib"],
+  "files": ["lib", "package.json", "README.md"],
   "module": "lib/index.esm.js",
   "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/tree/master/packages/babel-preset-transform-import-meta#readme",
   "repository": {

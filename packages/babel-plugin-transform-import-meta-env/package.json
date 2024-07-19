@@ -6,7 +6,7 @@
   "module": "lib/index.esm.js",
   "typings": "lib/index.d.ts",
   "type": "module",
-  "files": ["lib"],
+  "files": ["lib", "package.json", "README.md"],
   "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/tree/master/packages/babel-plugin-transform-import-meta-env#readme",
   "repository": {
     "type": "git",
