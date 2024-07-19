@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-import-meta-env",
-  "version": "0.0.3",
+  "version": "0.0.1-beta.0",
   "description": "babel plugin to resolve jest error about import.meta.env",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -57,5 +57,8 @@
     "tslib": "^2.6.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

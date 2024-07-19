@@ -1,9 +1,10 @@
 {
   "name": "babel-preset-transform-import-meta",
-  "version": "0.0.5",
+  "version": "0.0.1-beta.0",
   "description": "babel preset to transform import.meta",
   "main": "lib/index.js",
   "type": "module",
+  "files": ["lib"],
   "module": "lib/index.esm.js",
   "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/tree/master/packages/babel-preset-transform-import-meta#readme",
   "repository": {
@@ -60,5 +61,8 @@
     "tslib": "^2.6.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }
