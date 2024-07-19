@@ -1,12 +1,14 @@
 {
   "name": "babel-plugin-transform-import-meta-glob",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "babel plugin to resolve jest error about import.meta.glob and import.meta.globEager",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "typings": "lib/index.d.ts",
   "type": "module",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "homepage": "https://github.com/yangzhiganlu-fav/babel-transform-vite-meta/tree/master/packages/babel-plugin-transform-import-meta-glob#readme",
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.24.8",
+    "crypto": "^1.0.1",
     "fast-glob": "^3.3.2"
   },
   "devDependencies": {

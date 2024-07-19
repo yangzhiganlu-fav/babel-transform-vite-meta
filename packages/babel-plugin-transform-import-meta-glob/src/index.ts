@@ -1,6 +1,19 @@
-import babelCore, { PluginObj } from '@babel/core';
+import babelCore, { PluginObj, NodePath } from '@babel/core';
 import fastGlob from 'fast-glob';
 import { dirname, resolve } from 'path';
+import { createHash } from 'crypto';
+
+const getUniqueString = (input: string) => {
+    const hash = createHash('sha256').update(input).digest('hex');
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+        const hexValue = parseInt(hash[i], 16);
+        const letterIndex = hexValue % 26;
+        result += letters[letterIndex];
+    }
+    return result;
+};
 
 export interface PluginOpts {
     eager?: boolean;
@@ -46,7 +59,7 @@ const plugin = ({ types: t }: typeof babelCore): PluginObj => {
         },
         globEager: (paths: string[], cwd: string) => {
             return paths.map((path) => {
-                const moduleName = path.replace(/[^a-zA-Z0-9]/g, '_');
+                const moduleName = `mod_${getUniqueString(path)}`;
                 return {
                     path,
                     name: moduleName,
@@ -116,11 +129,16 @@ const plugin = ({ types: t }: typeof babelCore): PluginObj => {
                     const optsAsts = node.arguments[1];
                     const opts = getOptsFromAst(optsAsts);
                     if (node.callee.property.name === 'globEager' || opts?.eager) {
-                        const program = path.findParent((p) => p.isProgram())!;
+                        const program = path.findParent((p) => p.isProgram()) as NodePath<babelCore.types.Program>;
                         const imports = asts.globEager(pathList, cwd);
                         path.replaceWith(t.objectExpression(
                             imports.map(({ path, name, importAst }) => {
-                                t.isProgram(program.node) && program.node.body.unshift(importAst);
+                                const isSameImportExist = program.node.body.some((node) => {
+                                    return t.isImportDeclaration(node) && node.source.value === importAst.source.value;
+                                });
+                                if (!isSameImportExist) {
+                                    program.node.body.unshift(importAst);
+                                }
                                 return t.objectProperty(
                                     t.stringLiteral(path),
                                     t.identifier(name)
